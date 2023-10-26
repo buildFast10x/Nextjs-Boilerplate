@@ -11,6 +11,35 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Profile {
+
+enum LoginProviderEnum {
+  SELF
+  GOOGLE
+}
+
+model User {
   id String @id @default(uuid())
+  firstName String
+  lastName String
+  password String? @db.Text
+  email String @unique
+  emailVerified DateTime?
+  provider LoginProviderEnum? 
+  providerId String? @db.Text
+
+  authDetials AuthDetails?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model AuthDetails {
+  id String @id @default(uuid())
+  userId String @unique
+  verificationToken String
+  refresh_token String? @db.Text
+  expires_at DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
