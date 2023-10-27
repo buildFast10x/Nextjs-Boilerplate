@@ -2,11 +2,10 @@
 const env = process.env.NEXT_PUBLIC_ENV || '';
 // console.log(env);
 const dev: any = {
+    nextEnv: process.env.NEXT_PUBLIC_ENV || '',
+    nextAuthSecret: process.env.DEV_NEXTAUTH_SECRET || '',
     app: {
         url: process.env.NEXT_PUBLIC_DEV_API_URL || ''
-    },
-    googleLogin: {
-        clientid: process.env.NEXT_PUBLIC_DEV_GOOGLE_CLIENT_ID || ''
     },
     imageKit: {
         publicKey: process.env.NEXT_PUBLIC_DEV_IMAGEKIT_PUBLIC_KEY || '',
@@ -25,16 +24,19 @@ const dev: any = {
             username: process.env.DEV_DB_USERNAME || '',
             password: process.env.DEV_DB_PASSWORD || '',
             port: process.env.PROD_DB_PORT || ''
+        },
+        google: {
+            clientId: process.env.DEV_GOOGLE_CLIENT_ID || '',
+            clientSecret: process.env.DEV_GOOGLE_CLIENT_SECRET || ''
         }
     }
 };
 
 const prod: any = {
+    nextEnv: process.env.NEXT_PUBLIC_ENV || '',
+    nextAuthSecret: process.env.DEV_NEXTAUTH_SECRET || '',
     app: {
         url: process.env.NEXT_PUBLIC_PROD_API_URL || ''
-    },
-    googleLogin: {
-        clientid: process.env.NEXT_PUBLIC_PROD_GOOGLE_CLIENT_ID || ''
     },
     tinyMCE: {
         apiKey: process.env.NEXT_PUBLIC_TINYMCE || ''
@@ -56,7 +58,11 @@ const prod: any = {
             username: process.env.PROD_DB_USERNAME || '',
             password: process.env.PROD_DB_PASSWORD || '',
             port: process.env.PROD_DB_PORT || ''
-        }   
+        },
+        google: {
+            clientId: process.env.PROD_GOOGLE_CLIENT_ID || '',
+            clientSecret: process.env.PROD_GOOGLE_CLIENT_SECRET || ''
+        }
     }
 };
 
