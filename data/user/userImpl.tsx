@@ -1,8 +1,9 @@
-import { LoginProviderEnum } from "@/enums/LoginProviderEnum";
+import LoginProviderEnum from "@/enums/LoginProviderEnum";
 import userInterface from "./userInterface";
 import authDetailsInterface from "../authDetails/authDetailsInterface";
 import stringUtils from "@/utils/stringUtils";
 import authDetailsImpl from "../authDetails/authDetailsImpl";
+import { JsonObject } from "@prisma/client/runtime/library";
 
 export default class userImpl implements userInterface {
     id!: string;
@@ -12,7 +13,7 @@ export default class userImpl implements userInterface {
     email!: string;
     emailVerified!: Date;
     provider!: LoginProviderEnum;
-    providerId!: String;
+    providerId!: string;
 
     authDetials!: authDetailsInterface;
 
@@ -20,7 +21,7 @@ export default class userImpl implements userInterface {
     updatedAt!: Date;
 
 
-    initFromDataObj(data: userInterface) {
+    initFromDataObj(data: userInterface): void {
         this.id = data?.id;
         this.firstName = data?.firstName;
         this.lastName = data?.lastName;
@@ -37,7 +38,7 @@ export default class userImpl implements userInterface {
 
         if (stringUtils.isUndefinedEmptyorNull(data?.authDetials)) {
             const authDetailsObj = new authDetailsImpl();
-            
+
         }
 
         this.authDetials = data?.authDetials;
@@ -52,5 +53,55 @@ export default class userImpl implements userInterface {
             const d: Date = new Date(data?.updatedAt);
             this.updatedAt = d;
         }
+    }
+
+    toJson(): any {
+        let json: any = {}
+        
+        if (!stringUtils.isUndefinedEmptyorNull(this.id)) {
+            json["id"] = this.id
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.firstName)) {
+            json["firstName"] = this.firstName
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.lastName)) {
+            json["lastName"] = this.lastName
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.password)) {
+            json["password"] = this.password
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.email)) {
+            json["email"] = this.email
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.emailVerified)) {
+            json["emailVerified"] = this.emailVerified.toString();
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.provider)) {
+            json["provider"] = this.provider
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.providerId)) {
+            json["providerId"] = this.providerId
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.authDetials)) {
+            json["authDetials"] = this.authDetials.toJson()
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.createdAt)) {
+            json["createdAt"] = this.createdAt.toString();
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(this.updatedAt)) {
+            json["updatedAt"] = this.updatedAt.toString();
+        }
+
+        return json;
     }
 }

@@ -1,5 +1,6 @@
-import { LoginProviderEnum } from "@/enums/LoginProviderEnum"
+import LoginProviderEnum from "@/enums/LoginProviderEnum"
 import authDetailsInterface from "../authDetails/authDetailsInterface"
+import { JsonObject } from "@prisma/client/runtime/library"
 
 export default interface userInterface {
     id: string
@@ -9,10 +10,12 @@ export default interface userInterface {
     email: string
     emailVerified: Date
     provider: LoginProviderEnum
-    providerId: String 
+    providerId: string 
 
     authDetials: authDetailsInterface
 
     createdAt: Date
     updatedAt: Date
+
+    toJson(): any
 }

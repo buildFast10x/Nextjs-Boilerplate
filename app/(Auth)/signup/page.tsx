@@ -1,7 +1,6 @@
 "use client"
-import * as z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import User from "@/apiCalls/User"
+import userSignupInterface from "@/app/(Auth)/signup/_interfaces/userSignupInterface"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -12,17 +11,24 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
+import ResponseHandler from "@/data/ResponseHandler"
+import LoginProviderEnum from "@/enums/LoginProviderEnum"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 
-const formSchema = z.object({
-    email: z.string().min(2, {
-        message: "Email must be at least 2 characters.",
-    }),
+const userSchema: z.ZodType<userSignupInterface> = z.object({
     firstName: z.string().max(150, {
         message: "Character Limit Exceeded",
     }),
     lastName: z.string().max(150, {
         message: "Character Limit Exceeded",
+    }),
+    email: z.string().min(2, {
+        message: "Email must be at least 2 characters.",
     }),
     password: z.string(),
     cfpassword: z.string()
@@ -30,8 +36,11 @@ const formSchema = z.object({
 
 export default function Login() {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const [formStatus, setFormStatus] = useState<formResponseInterface>()
+    const { toast } = useToast()
+    
+    const form = useForm<z.infer<typeof userSchema>>({
+        resolver: zodResolver(userSchema),
         defaultValues: {
             email: "",
             firstName: "",
@@ -42,11 +51,32 @@ export default function Login() {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(data: z.infer<typeof userSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-
-        console.log(values)
+        if(data.cfpassword !== data.password) {
+            setFormStatus({
+                className: 'text-red-600',
+                message: 'Password does not match.',
+            });
+            return;
+        }
+        
+        const userAPIHandler = new User();
+        data.provider = LoginProviderEnum.SELF;
+        const response: ResponseHandler = await userAPIHandler.add(data);
+        if(response.data.success) {
+            setFormStatus({
+                className: 'text-green-600',
+                message: response.data.message || '',
+            });
+        } else {
+            setFormStatus({
+                className: 'text-red-600',
+                message: response.data.message || '',
+            });
+        }
+        
     }
 
     return (
@@ -126,8 +156,11 @@ export default function Login() {
                             />
                             <Button type="submit">Submit</Button>
                         </form>
+                        <p className={formStatus?.className}>{
+                            formStatus?.message
+                        }</p>
                     </Form>
-
+                    {/* <Toaster /> */}
                 </div>
             </div>
         </div>
