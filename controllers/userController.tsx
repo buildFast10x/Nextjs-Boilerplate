@@ -29,14 +29,19 @@ export default class userController {
     }
 
     async isEmailexists(email: string) {
+        const result = await this.getUserByEmail(email);
+        return !jsonUtilsImpl.isEmpty(result) === true;
+    }
+
+    async getUserByEmail(email: string) {
         const whereJson = {
             "email": email
         }
-        
+
         const finalQuery = {
             where: whereJson
         }
         const result = await prisma.user.findUnique(finalQuery);
-        return jsonUtilsImpl.isEmpty(result) === false;
+        return result;
     }
 }

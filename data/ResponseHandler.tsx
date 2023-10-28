@@ -7,8 +7,12 @@ export default class ResponseHandler extends ErrorResponse {
     success?: boolean;
     data?: any;
 
-    setStatus(success: boolean) {
+    setSuccess(success: boolean) {
         this.success = success;
+    }
+
+    setStatus(status: number) {
+        this.status = status;
     }
 
     setData(data: any) {

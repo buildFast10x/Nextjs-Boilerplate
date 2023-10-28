@@ -6,12 +6,6 @@ import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
 
-export async function GET( req: Request) {
-
-    return NextResponse.json({message: "xyz"});
-}
-
-
 export async function POST(req: Request) {
     try {
         
@@ -36,7 +30,7 @@ export async function POST(req: Request) {
             )
 
             const response = new ResponseHandler();
-            response.setStatus(true);
+            response.setStatus(200);
             response.setData(result);
             response.setMessage("User Created")
             const returnJson = response.toJson();
@@ -44,7 +38,7 @@ export async function POST(req: Request) {
         }
 
         const response = new ResponseHandler();
-        response.setStatus(true);
+        response.setStatus(500)
         response.setMessage("Email Id already Exists");
         const returnJson = response.toJson();
         return NextResponse.json(returnJson);

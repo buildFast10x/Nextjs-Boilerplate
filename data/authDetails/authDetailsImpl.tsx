@@ -9,16 +9,25 @@ export default class authDetailsImpl implements authDetailsInterface {
     user!: userInterface;
     verificationToken!: string;
     refresh_token!: string;
-    expires_at!: Number;
+    expires_at!: Date;
 
     createdAt!: Date;
     updatedAt!: Date;
 
+    constructor() {
+    }
+
+    initFromValues(verificationToken: string, refresh_token: string, expires_at: Date) {
+        this.verificationToken = verificationToken;
+        this.refresh_token = refresh_token;
+        this.expires_at = expires_at;
+    }
+
     initFromDataObj(data: authDetailsInterface): void {
 
-        this.id = data?.id;
+        this.id = data?.id || '';
         
-        if (stringUtils.isUndefinedEmptyorNull(data?.user)) {
+        if (!stringUtils.isUndefinedEmptyorNull(data?.user)) {
             const user = new userImpl();
             user.initFromDataObj(data?.user);
             this.user = user;
@@ -26,14 +35,18 @@ export default class authDetailsImpl implements authDetailsInterface {
 
         this.verificationToken = data?.verificationToken;
         this.refresh_token = data?.refresh_token;
-        this.expires_at = data?.expires_at;
 
-        if (stringUtils.isUndefinedEmptyorNull(data?.createdAt)) {
+        if (!stringUtils.isUndefinedEmptyorNull(data?.expires_at)) {
+            const d: Date = new Date(data?.expires_at);
+            this.expires_at = d;
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(data?.createdAt)) {
             const d: Date = new Date(data?.createdAt);
             this.createdAt = d;
         }
 
-        if (stringUtils.isUndefinedEmptyorNull(data?.updatedAt)) {
+        if (!stringUtils.isUndefinedEmptyorNull(data?.updatedAt)) {
             const d: Date = new Date(data?.updatedAt);
             this.updatedAt = d;
         }

@@ -3,6 +3,10 @@ const AllAPIRouteMapping = {
         add: {
             apiPath: "/api/user",
             method: "POST"
+        },
+        login: {
+            apiPath: "/api/auth",
+            method: "POST"
         }
     }
 }

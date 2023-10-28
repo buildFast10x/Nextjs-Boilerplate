@@ -28,7 +28,7 @@ export default class userImpl implements userInterface {
         this.password = data?.password;
         this.email = data?.email;
 
-        if (stringUtils.isUndefinedEmptyorNull(data?.emailVerified)) {
+        if (!stringUtils.isUndefinedEmptyorNull(data?.emailVerified)) {
             const d: Date = new Date(data?.emailVerified);
             this.emailVerified = d;
         }
@@ -36,26 +36,27 @@ export default class userImpl implements userInterface {
         this.provider = data?.provider;
         this.providerId = data?.providerId;
 
-        if (stringUtils.isUndefinedEmptyorNull(data?.authDetials)) {
+        if (!stringUtils.isUndefinedEmptyorNull(data?.authDetials)) {
             const authDetailsObj = new authDetailsImpl();
-
+            authDetailsObj.initFromDataObj(data?.authDetials);
+            this.authDetials = authDetailsObj;
         }
 
         this.authDetials = data?.authDetials;
 
 
-        if (stringUtils.isUndefinedEmptyorNull(data?.createdAt)) {
+        if (!stringUtils.isUndefinedEmptyorNull(data?.createdAt)) {
             const d: Date = new Date(data?.createdAt);
             this.createdAt = d;
         }
 
-        if (stringUtils.isUndefinedEmptyorNull(data?.updatedAt)) {
+        if (!stringUtils.isUndefinedEmptyorNull(data?.updatedAt)) {
             const d: Date = new Date(data?.updatedAt);
             this.updatedAt = d;
         }
     }
 
-    toJson(): any {
+    toJson(removePassword: boolean = true): any {
         let json: any = {}
         
         if (!stringUtils.isUndefinedEmptyorNull(this.id)) {
@@ -70,7 +71,7 @@ export default class userImpl implements userInterface {
             json["lastName"] = this.lastName
         }
 
-        if (!stringUtils.isUndefinedEmptyorNull(this.password)) {
+        if (!stringUtils.isUndefinedEmptyorNull(this.password) && removePassword) {
             json["password"] = this.password
         }
 

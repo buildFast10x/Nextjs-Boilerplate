@@ -18,6 +18,7 @@ const dev: any = {
     },
     server: {
         port: process.env.SERVER_PORT || '',
+        jwtSecretKey: process.env.DEV_JWT_SECRET || '',
         db: {
             host: process.env.DEV_DB_HOST || '',
             name: process.env.DEV_DB_NAME || '',
@@ -52,6 +53,7 @@ const prod: any = {
     },
     server: {
         port: process.env.SERVER_PORT || '',
+        jwtSecretKey: process.env.PROD_JWT_SECRET || '',
         db: {
             host: process.env.PROD_DB_HOST || '',
             name: process.env.PROD_DB_NAME || '',

@@ -1,3 +1,4 @@
+import userLoginInterface from "@/app/(Auth)/login/_interfaces/userLoginInterface";
 import userSignupInterface from "@/app/(Auth)/signup/_interfaces/userSignupInterface";
 import ResponseHandler from "@/data/ResponseHandler";
 import userImpl from "@/data/user/userImpl";
@@ -16,7 +17,20 @@ export default class User {
         } catch(e: any) {
             const response: ResponseHandler = e;
             return response;
-        }
-        
+        }    
     }
+
+    async login(data: userLoginInterface) {
+        try {
+            const axios = new axiosInstance();
+            axios.setPayload(data);
+            const response: ResponseHandler = await axios.makeCall(AllAPIRouteMapping.users.login.apiPath, AllAPIRouteMapping.users.login.method);
+            return response;
+        } catch (e: any) {
+            const response: ResponseHandler = e;
+            return response;
+        }
+    }
+
+
 }

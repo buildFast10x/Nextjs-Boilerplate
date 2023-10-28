@@ -1,10 +1,12 @@
+import stringUtils from "./stringUtils";
+
 export default class jsonUtilsImpl {
 
     public static isEmpty(data: any) {
-        if (Object.keys(data).length === 0) {
-            return true;
+        if (!stringUtils.isUndefinedEmptyorNull(data) && Object.keys(data).length !== 0) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     static toString(json: any) {
