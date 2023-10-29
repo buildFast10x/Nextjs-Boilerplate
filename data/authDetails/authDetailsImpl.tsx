@@ -23,6 +23,10 @@ export default class authDetailsImpl implements authDetailsInterface {
         this.expires_at = expires_at;
     }
 
+    getUser(): userInterface {
+        return this.user;
+    }
+
     initFromDataObj(data: authDetailsInterface): void {
 
         this.id = data?.id || '';

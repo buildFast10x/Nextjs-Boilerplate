@@ -32,5 +32,14 @@ export default class User {
         }
     }
 
-
+    async getCurrentUser() {
+        try {
+            const axios = new axiosInstance();
+            const response: ResponseHandler = await axios.makeCall(AllAPIRouteMapping.auth.me.apiPath, AllAPIRouteMapping.auth.me.method);
+            return response;
+        } catch (e: any) {
+            const response: ResponseHandler = e;
+            return response;
+        }
+    }
 }

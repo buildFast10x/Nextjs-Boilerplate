@@ -3,10 +3,10 @@ import ResponseHandler from "@/data/ResponseHandler";
 import userImpl from "@/data/user/userImpl";
 import userInterface from "@/data/user/userInterface";
 import bcrypt from "bcrypt";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
         
         const userData: userInterface = await req.json();

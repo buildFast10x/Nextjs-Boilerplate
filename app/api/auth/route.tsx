@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import crypto from 'crypto';
 
 import { cookies } from 'next/headers'
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
 import userController from "@/controllers/userController";
@@ -16,17 +16,9 @@ import env_values from "@/config";
 import authDetailsImpl from "@/data/authDetails/authDetailsImpl";
 import dateUtils from "@/utils/dateUtils";
 import authDetailsController from "@/controllers/authDetailsController";
+import AuthHelper, { MAX_AGE_ACCESS_TOKEN, MAX_AGE_REFRESH_TOKEN } from "@/helpers/AuthHelper";
 
-
-const MAX_AGE_ACCESS_TOKEN = 10000
-const MAX_AGE_REFRESH_TOKEN = 60*60*24*7
-
-function setAuthenticationCookies(access_token: string, refresh_token: string) {
-    cookies().set("access_token", access_token, { "expires": dateUtils.addMilliSeconds(MAX_AGE_ACCESS_TOKEN) });
-    cookies().set("refresh_token", refresh_token, { "expires": dateUtils.addMilliSeconds(MAX_AGE_REFRESH_TOKEN) });
-}
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
         const userData: userInterface = await req.json();
 
@@ -74,7 +66,8 @@ export async function POST(req: Request) {
             ) 
             
             if(!jsonUtilsImpl.isEmpty(result)) {
-                setAuthenticationCookies(access_token, refresh_token);
+                const authHelperHandler = new AuthHelper();
+                authHelperHandler.setAuthenticationCookies(access_token, refresh_token);
 
                 const responseData: any = {
                     "access_token": access_token,

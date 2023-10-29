@@ -44,4 +44,21 @@ export default class userController {
         const result = await prisma.user.findUnique(finalQuery);
         return result;
     }
+
+    async getUserbyRefreshToken(refresh_token: string) {
+        const whereJson = {
+            "refresh_token": refresh_token
+        }
+
+        const includeJson = {
+            User: true
+        }
+
+        const finalQuery: any = {
+            where: whereJson,
+            // include: includeJson
+        }
+        const result = await prisma.authDetails.findFirst(finalQuery);
+        return result;
+    }
 }

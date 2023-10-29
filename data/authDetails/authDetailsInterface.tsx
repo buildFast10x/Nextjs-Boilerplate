@@ -1,4 +1,3 @@
-import { JsonObject } from "@prisma/client/runtime/library"
 import userInterface from "../user/userInterface"
 
 export default interface authDetailsInterface {
@@ -11,5 +10,6 @@ export default interface authDetailsInterface {
     createdAt: Date
     updatedAt: Date
 
+    getUser(): userInterface
     toJson(): any
 }

@@ -22,7 +22,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProviders>
         <ReduxProvider>
-            xyz
           {children}
         </ReduxProvider>
         </ThemeProviders>

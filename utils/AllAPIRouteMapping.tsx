@@ -8,6 +8,13 @@ const AllAPIRouteMapping = {
             apiPath: "/api/auth",
             method: "POST"
         }
+    },
+
+    auth: {
+        me: {
+            apiPath: "/api/me",
+            method: "GET"
+        }
     }
 }
 
