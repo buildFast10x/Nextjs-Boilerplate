@@ -19,10 +19,10 @@ export default class AuthHelper {
 
     setAuthenticationCookies(access_token: string, refresh_token: string) {
         if (!stringUtils.isUndefinedEmptyorNull(access_token)) {
-            cookies().set("access_token", access_token, { "expires": dateUtils.addMilliSeconds(MAX_AGE_ACCESS_TOKEN) });
+            cookies().set("access_token", access_token, { "maxAge": MAX_AGE_ACCESS_TOKEN });
         }
         if (!stringUtils.isUndefinedEmptyorNull(refresh_token)) {
-            cookies().set("refresh_token", refresh_token, { "expires": dateUtils.addMilliSeconds(MAX_AGE_REFRESH_TOKEN) });
+            cookies().set("refresh_token", refresh_token, { "maxAge": MAX_AGE_REFRESH_TOKEN });
         }
     }
 
@@ -46,7 +46,7 @@ export default class AuthHelper {
 
                     const access_token = jwt.sign({
                         data: JSON.stringify(userJWTData)
-                    }, env_values.server.jwtSecretKey, { expiresIn: MAX_AGE_ACCESS_TOKEN.toString() + "ms" });
+                    }, env_values.server.jwtSecretKey, { expiresIn: MAX_AGE_ACCESS_TOKEN });
 
                     this.setAuthenticationCookies(access_token, '');
                     return userJWTData;

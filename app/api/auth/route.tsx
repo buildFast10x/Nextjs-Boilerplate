@@ -48,12 +48,12 @@ export async function POST(req: NextRequest) {
             
             const access_token = jwt.sign({
                 data: JSON.stringify(userJWTData)
-            }, env_values.server.jwtSecretKey, { expiresIn: MAX_AGE_ACCESS_TOKEN.toString() + "ms" });
+            }, env_values.server.jwtSecretKey, { expiresIn: MAX_AGE_ACCESS_TOKEN });
 
             const verificationToken = crypto.randomBytes(32).toString('hex');
             const refresh_token = jwt.sign({
                 data: JSON.stringify(userJWTData) + verificationToken
-            }, env_values.server.jwtSecretKey, { expiresIn: MAX_AGE_REFRESH_TOKEN.toString() + "ms" });
+            }, env_values.server.jwtSecretKey, { expiresIn: MAX_AGE_REFRESH_TOKEN });
 
             const authDetailForm = new authDetailsImpl();
             authDetailForm.initFromValues(verificationToken, refresh_token, dateUtils.addDaysToCurrentDate(7));
