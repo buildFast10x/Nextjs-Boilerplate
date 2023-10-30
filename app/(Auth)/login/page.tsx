@@ -18,10 +18,7 @@ import userLoginInterface from "./_interfaces/userLoginInterface"
 import User from "@/apiCalls/User"
 import ResponseHandler from "@/data/ResponseHandler"
 
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store"
-import { login } from "@/redux/reducers/auth"
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/store';
 import userInterface from "@/data/user/userInterface"
 
@@ -34,8 +31,7 @@ const loginSchema: z.ZodType<userLoginInterface> = z.object({
 
 export default function Login() {
 
-    const dispatch = useDispatch<AppDispatch>();
-    // const router = useRouter();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -49,14 +45,11 @@ export default function Login() {
     async function onSubmit(data: z.infer<typeof loginSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(data);
         const userAPIHandler = new User();
         const response: ResponseHandler = await userAPIHandler.login(data);
         if(response.data.success) {
-            dispatch(login(response.data.data.user))
-            // router.push('/dashboard');
+            router.push('/dashboard');
         }
-        console.log("Response ", response);
     }
 
     const user: userInterface = useAppSelector((state) => state.auth.value.user);
