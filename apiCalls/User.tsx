@@ -1,4 +1,4 @@
-import userLoginInterface from "@/app/(Auth)/login/_interfaces/userLoginInterface";
+import userLoginInterface from "@/app/(Auth)/(login)/_interfaces/userLoginInterface";
 import userSignupInterface from "@/app/(Auth)/signup/_interfaces/userSignupInterface";
 import ResponseHandler from "@/data/ResponseHandler";
 import userImpl from "@/data/user/userImpl";

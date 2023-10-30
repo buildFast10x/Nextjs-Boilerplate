@@ -32,7 +32,7 @@ export async function middleware(req: NextRequest) {
 
         // Is Authenticated Path and doesn't have a token 
         if (isAuthenticatedPath && !hasToken) {
-            return NextResponse.redirect(new URL('/login', req.nextUrl))
+            return NextResponse.redirect(new URL('/', req.nextUrl))
         }
 
         // is public path and have a token
