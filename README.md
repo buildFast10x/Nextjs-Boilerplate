@@ -8,7 +8,7 @@ First, Setup the Database- We are using MYSQL as a database:
     npx prisma db push
 ```
 
-First, run the development server:
+To run the development server:
 
 ```bash
 npm run dev
