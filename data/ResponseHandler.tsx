@@ -1,4 +1,4 @@
-import ErrorResponse from "@/middlewares/ErrorResponse";
+import ErrorResponse from "@/data/ErrorResponse";
 import jsonUtilsImpl from "@/utils/jsonUtils";
 import stringUtils from "@/utils/stringUtils";
 

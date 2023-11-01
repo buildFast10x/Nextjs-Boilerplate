@@ -52,6 +52,10 @@ export default function Login() {
         }
     }
 
+    function handleSignupRedirect() {
+        router.push('/signup');
+    }
+
     const user: userInterface = useAppSelector((state) => state.auth.value.user);
 
     return (
@@ -84,7 +88,7 @@ export default function Login() {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="shadcn" {...field} />
+                                            <Input placeholder="shadcn" type="password" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -93,10 +97,11 @@ export default function Login() {
                             <Button type="submit">Submit</Button>
                         </form>
                     </Form>
-                    <div>
-                        <p>{user.id}</p>
+                    <div className="mt-5">
+                        Didn't have a account? <Button type="submit" onClick={handleSignupRedirect}>Signup</Button>
                     </div>
                 </div>
+               
             </div>
         </div>
     )

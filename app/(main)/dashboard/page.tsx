@@ -22,6 +22,7 @@ export default function page() {
 
     async function init() {
         const userAPIHandler = new User();
+        // Getting API Response HERE 
         const response: ResponseHandler = await userAPIHandler.getCurrentUser();
         dispatch(login(response.data.data.me))
     }

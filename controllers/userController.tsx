@@ -1,7 +1,7 @@
 import prisma from "@/lib/prismadb";
 
 import userInterface from "@/data/user/userInterface";
-import errorHandler  from "@/middlewares/ErrorResponse";
+import errorHandler  from "@/data/ErrorResponse";
 import LoginProviderEnum from "@/enums/LoginProviderEnum";
 import jsonUtilsImpl from "@/utils/jsonUtils";
 

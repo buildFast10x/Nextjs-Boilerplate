@@ -34,8 +34,11 @@ export default class User {
 
     async getCurrentUser() {
         try {
+            // created axios object from 
             const axios = new axiosInstance();
+            // Made axios call to backend 
             const response: ResponseHandler = await axios.makeCall(AllAPIRouteMapping.auth.me.apiPath, AllAPIRouteMapping.auth.me.method);
+            // returning the response 
             return response;
         } catch (e: any) {
             const response: ResponseHandler = e;

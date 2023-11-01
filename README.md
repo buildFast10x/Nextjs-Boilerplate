@@ -2,6 +2,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+First, Setup the Database- We are using MYSQL as a database:
+```
+    npx prisma generate
+    npx prisma db push
+```
+
 First, run the development server:
 
 ```bash
