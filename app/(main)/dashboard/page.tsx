@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
-export default function page() {
+export default function Page() {
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
     const user: userInterface = useAppSelector((state) => state.auth.value.user);
