@@ -21,6 +21,7 @@ import ResponseHandler from "@/data/ResponseHandler"
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/store';
 import userInterface from "@/data/user/userInterface"
+import { useEffect } from "react"
 
 const loginSchema: z.ZodType<userLoginInterface> = z.object({
     email: z.string().min(2, {
@@ -31,7 +32,18 @@ const loginSchema: z.ZodType<userLoginInterface> = z.object({
 
 export default function Login() {
 
+    // const [seo, setSeo] = useState<seoInterface>();
     const router = useRouter();
+
+    useEffect(() => {
+        init();
+    }, [])
+
+    async function init() {
+        // const seoHandler = new seoImpl();
+        // seoHandler.initFromDataObj(pageSEOs.landingPage);
+        // await setSeo(seoHandler);
+    }
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -59,50 +71,52 @@ export default function Login() {
     const user: userInterface = useAppSelector((state) => state.auth.value.user);
 
     return (
-        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-">
-            <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="shadcn" {...field} />
-                                        </FormControl>
-                                        <FormDescription>
-                                            This is your public display name.
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+        <>
+            <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-">
+                <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+                    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Email</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="shadcn" {...field} />
+                                            </FormControl>
+                                            <FormDescription>
+                                                This is your public display name.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
 
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="shadcn" type="password" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <Button type="submit">Submit</Button>
-                        </form>
-                    </Form>
-                    <div className="mt-5">
-                        Didn't have a account? <Button type="submit" onClick={handleSignupRedirect}>Signup</Button>
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="shadcn" type="password" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit">Submit</Button>
+                            </form>
+                        </Form>
+                        <div className="mt-5">
+                            Didn't have a account? <Button type="submit" onClick={handleSignupRedirect}>Signup</Button>
+                        </div>
                     </div>
+                
                 </div>
-               
             </div>
-        </div>
+        </>
     )
 }

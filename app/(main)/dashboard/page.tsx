@@ -10,6 +10,15 @@ import { login } from "@/redux/reducers/auth"
 import { Button } from "@/components/ui/button"
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+
+import { Switch } from "@/components/ui/switch"
 
 export default function Page() {
     const router = useRouter();
@@ -36,10 +45,55 @@ export default function Page() {
     }
 
     return (
-        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-">
+        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <p>User Details: {user?.firstName} <br /> {user?.id}</p>
+
+                    <div className="py-12">
+                        <Switch /> Monthly
+                    </div>
+                    <div className="flex flex-row py-12">
+                        <div className="w-1/3 mx-4">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Basic</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p>$5/mo</p>
+                                </CardContent>
+                                <CardFooter>
+                                    <Button>Buy Now</Button>
+                                </CardFooter>
+                            </Card>
+                        </div>
+                        <div className="w-1/3 mx-4">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Pro</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p>$10/mo</p>
+                                </CardContent>
+                                <CardFooter>
+                                    <Button>Buy Now</Button>
+                                </CardFooter>
+                            </Card>
+                        </div>
+                        <div className="w-1/3 mx-4">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Premium</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p>$20/mo</p>
+                                </CardContent>
+                                <CardFooter>
+                                    <Button>Buy Now</Button>
+                                </CardFooter>
+                            </Card>
+                        </div>
+                    </div>
                     <Button className='mt-5' onClick={(e) => handleLogout(e)}>Logout</Button>
                 </div>
             </div>
