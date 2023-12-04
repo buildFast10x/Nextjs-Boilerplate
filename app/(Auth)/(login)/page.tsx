@@ -111,7 +111,7 @@ export default function Login() {
                             </form>
                         </Form>
                         <div className="mt-5">
-                            Didn't have a account? <Button type="submit" onClick={handleSignupRedirect}>Signup</Button>
+                            Didn&apos;t have a account? <Button type="submit" onClick={handleSignupRedirect}>Signup</Button>
                         </div>
                     </div>
                 

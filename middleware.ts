@@ -5,7 +5,8 @@ import { NextResponse } from 'next/server';
 const publicPaths = [
     '/',
     '/login',
-    '/signup'
+    '/signup',
+    '/api/webhook'
 ]
 
 // Add Authenticated Paths here 
