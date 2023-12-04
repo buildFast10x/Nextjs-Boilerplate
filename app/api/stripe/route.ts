@@ -1,9 +1,9 @@
 import Stripe from 'stripe'
 import { NextResponse, NextRequest } from "next/server";
-import { useAppSelector } from '@/redux/store';
 import userInterface from '@/data/user/userInterface';
 import prismaDb from '@/lib/prismadb'
 import { stripe } from '@/lib/stripe';
+import AuthHelper from "@/helpers/AuthHelper";
 
 
 
@@ -20,13 +20,17 @@ export async function POST(request: NextRequest) {
     let data = await request.json();
     const priceId = data.id;
 
-    // const user: userInterface = useAppSelector((state) => state.auth.value.user);
+    const access_token: string = request.cookies.get('access_token')?.value || '';
+    const refresh_token: string = request.cookies.get('refresh_token')?.value || '';
+    const authHelperHandler = new AuthHelper();
+    const user: any = (await authHelperHandler.extractToken(access_token, refresh_token));
 
-    const userId: string = '72e3a86a-b830-4d2a-a211-f344a0756b2f';
 
-    // if(!user.id && !user){
-    //     return new NextResponse("Unauthorized",  {status: 401})
-    // }
+    const userId: string = user.id;
+
+    if(!user.id && !user){
+        return new NextResponse("Unauthorized",  {status: 401})
+    }
 
     const userSubscription = await prismaDb.userSubscription.findUnique({
         where: {
