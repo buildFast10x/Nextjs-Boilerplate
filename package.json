@@ -18,6 +18,8 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-toast": "^1.1.5",
     "@reduxjs/toolkit": "^1.9.7",
+    "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.2.0",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
@@ -37,6 +39,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
     "sequelize": "^6.33.0",
+    "stripe": "^14.7.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"

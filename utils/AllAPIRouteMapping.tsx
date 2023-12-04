@@ -15,6 +15,17 @@ const AllAPIRouteMapping = {
             apiPath: "/api/me",
             method: "GET"
         }
+    },
+
+    stripe: {
+        getProducts: {
+            apiPath: '/api/stripe',
+            method: 'GET'
+        },
+        checkoutProduct: {
+            apiPath: '/api/stripe',
+            method: 'POST'
+        }
     }
 }
 
