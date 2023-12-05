@@ -55,4 +55,5 @@ model UserSubscription {
   stripeSubscriptionId String? @unique
   stripePriceId String
   stripeCurrentPeriodEnd DateTime
+  stripeSubscriptionType String
 }

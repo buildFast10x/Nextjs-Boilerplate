@@ -1,6 +1,4 @@
-import Stripe from 'stripe'
 import { NextResponse, NextRequest } from "next/server";
-import userInterface from '@/data/user/userInterface';
 import prismaDb from '@/lib/prismadb'
 import { stripe } from '@/lib/stripe';
 import AuthHelper from "@/helpers/AuthHelper";
