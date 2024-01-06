@@ -15,7 +15,9 @@ Welcome to the Next.js Open Source Boilerplate by [Buildfast](https://buildfast.
 
 **Frontend**: Shadcdn, Tailwind css
 
-**Tech**: Nextjs
+**Framework**: Nextjs, Prisma
+
+**Database**: Mysql
 
 **Payment Gateway**: Stripe
 
