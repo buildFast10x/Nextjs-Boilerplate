@@ -44,7 +44,16 @@ git clone https://github.com/buildFast10x/Nextjs-Boilerplate.git
 Here is the .env file  [example](https://github.com/buildFast10x/Nextjs-Boilerplate/blob/main/.env.example).
 
 
-### 3. Run Project
+### 3. Setup the Database
+
+```shell
+npx prisma generate
+```
+```shell
+npx prisma db push
+```
+
+### 4. Run Project
 
 ```shell
 npm install
