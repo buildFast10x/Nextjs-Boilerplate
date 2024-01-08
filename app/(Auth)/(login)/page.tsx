@@ -59,7 +59,7 @@ export default function Login() {
         // ✅ This will be type-safe and validated.
         const userAPIHandler = new User();
         const response: ResponseHandler = await userAPIHandler.login(data);
-        if(response.data.success) {
+        if(response.data?.success) {
             router.push('/dashboard');
         }
     }
