@@ -1,5 +1,5 @@
 
-# Nextjs Boilerplate
+# Nextjs Boilerplate &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/buildFast10x/Nextjs-Boilerplate/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/buildFast10x/Nextjs-Boilerplate/blob/main/contribution.md)
 
 Welcome to the Next.js Open Source Boilerplate by [Buildfast](https://buildfast.co.in/)! This boilerplate is designed to kickstart your Next.js projects with a well-organized and extensible foundation.
 
