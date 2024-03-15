@@ -18,7 +18,7 @@ bun dev
 ```printenv
 NEXTAUTH_SECRET=""
 NEXTAUTH_URL=""
-DATABASE_URL="mysql://username@host:port/dbname"
+DATABASE_URL=""
 GOOGLE_CLIENT_ID=""
 GOOGLE_CLIENT_SECRET=""
 STRIPE_SECRET_KEY=""
