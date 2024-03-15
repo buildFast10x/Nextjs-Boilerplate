@@ -13,24 +13,41 @@ pnpm dev
 # or
 bun dev
 ```
+### Add these .env values
+
+```printenv
+NEXTAUTH_SECRET=""
+NEXTAUTH_URL=""
+DATABASE_URL="mysql://username@host:port/dbname"
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+STRIPE_SECRET_KEY=""
+STRIPE_WEBHOOK_SECRET=""
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=""
+NEXT_PUBLIC_STRIPE_PRO_PRICE_ID=""
+NEXT_PUBLIC_STRIPE_MAX_PRICE_ID=""
+NEXT_PUBLIC_STRIPE_ULTRA_PRICE_ID=""
+RESEND_API_KEY=""
+```
+
+
+##### Create / Manage billing api route 
+POST http://localhost:3000/api/billing
+also update stripe/config file
+
+##### Add your Email template or update email template
+app/component/email
+
+##### Send email api route
+POST http://localhost:3000/api/email
+
+##### Stripe webhooks api
+POST http://localhost:3000/api/webhooks/stripe
+
+##### Update next-auth/config
+For adding more oauth providers 
+For adding or removing user details in login session
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

@@ -14,5 +14,5 @@ export type AuthSession = {
 
 export const getCurrentUser = async () => {
   const session = await getServerSession(authOptions);
-  return session?.user;
+  return session;
 };

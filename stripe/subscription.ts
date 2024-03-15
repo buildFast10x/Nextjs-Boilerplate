@@ -4,7 +4,7 @@ import { stripe } from "./index";
 import { getCurrentUser } from "@/next-auth/utils";
 
 export async function getUserSubscriptionPlan() {
-  const { session } = await getCurrentUser();
+  const session = await getCurrentUser();
 
   if (!session || !session.user) {
     throw new Error("User not found.");
