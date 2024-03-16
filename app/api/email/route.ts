@@ -1,18 +1,20 @@
-import { EmailTemplate } from "@/app/component/email";
-import { resend } from "@/resend/config";
+import mailImpl from "@/data/mail/mailImpl";
+import resendInstance from "@/lib/resend";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
+
+  const mail = new mailImpl();
+  mail.initFromDataObject(body);
+  mail.setFrom("Buildfast <onboarding@resend.dev>");
+  mail.setSubject("Hello world");
+  mail.setText("Mail by buildfst");
+
   const { name, email } = body;
   try {
-    const { data, error } = await resend.emails.send({
-      from: "Buildfast <onboarding@resend.dev>",
-      to: [email],
-      subject: "Hello world!",
-      react: EmailTemplate({ firstName: name }),
-      text: "Email powered by Resend.",
-    });
+    const resend = new resendInstance;
+    const { data, error } = await resend.sendMail(mail)
     if (error) {
       return NextResponse.json(error, { status: 400 });
     }

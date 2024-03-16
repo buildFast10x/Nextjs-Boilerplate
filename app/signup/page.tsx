@@ -1,4 +1,4 @@
-import SignupForm from '@/components/internal/SignupForm'
+import SignupForm from '@/components/internal/Forms/SignupForm'
 import React from 'react'
 
 export default function Signup() {

@@ -22,7 +22,7 @@ export default async function Dashboard() {
   const session = await getServerSession(authOptions);
   const subscriptionPlan = await getUserSubscriptionPlan();
   if (!session) {
-    redirect("/api/auth/signin");
+    redirect("/");
   }
   return (
     <div className="max-w-7xl mx-auto">

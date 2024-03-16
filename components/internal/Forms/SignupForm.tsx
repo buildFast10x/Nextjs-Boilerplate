@@ -18,8 +18,8 @@ import { Input } from "@/components/ui/input"
 import userInterface from '@/data/user/userInterface'
 import axiosInstance from '@/lib/axios'
 import AllAPIRouteMapping from '@/utils/AllAPIRouteMapping'
-import { FormError } from './FormError'
-import { FormSuccess } from './FormSuccess'
+import { FormError } from '../FormError'
+import { FormSuccess } from '../FormSuccess'
 
 const userFormSchema= z.object({
   name: z.string(),

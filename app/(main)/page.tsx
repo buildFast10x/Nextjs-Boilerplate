@@ -1,3 +1,4 @@
+import LoginForm from "@/components/internal/Forms/LoginForm";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/next-auth/utils";
@@ -13,7 +14,8 @@ export default async function Home() {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <Link href={'/api/auth/signin'} className={cn(buttonVariants({ size: "lg" }))}>Login</Link>
+      {/* <Link href={'/api/auth/signin'} className={cn(buttonVariants({ size: "lg" }))}>Login</Link> */}
+      <LoginForm />
     </div>
   );
 }
