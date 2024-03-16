@@ -5,6 +5,9 @@ import prisma from "@/lib/prisma";
 import { compare } from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
+import userImpl from "@/data/user/userImpl";
+import userController from "@/controllers/UserController";
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
@@ -26,29 +29,52 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
 
-        if (!credentials?.email || !credentials?.password) {
+        if (!credentials?.email || !credentials?.password) { 
+          return null;
+        }
+
+        const userControllerHandler = new userController();
+        const userDB = await userControllerHandler.getUserByEmail(credentials.email);
+        const user = new userImpl();
+        user.initFromDataObject(userDB)
+
+        if(!user || !user.getPassword()) {
           return null
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email
-          }
-        })
-
-        if (!user || !user.password) {
-          return null
-        }
-        const isPasswordValid = await compare(credentials.password, user.password)
-        if (!isPasswordValid) {
+        const isPasswordValid = await compare(credentials.password, user.getPassword() || '');
+        if(!isPasswordValid) {
           return null
         }
 
-        return {
-          id: String(user.id),
-          email: user.email,
-          name: user.name
-        };
+        return user.toJson();
+        
+
+        
+
+        // if (!credentials?.email || !credentials?.password) {
+        //   return null
+        // }
+
+        // const user = await prisma.user.findUnique({
+        //   where: {
+        //     email: credentials.email
+        //   }
+        // })
+
+        // if (!user || !user.password) {
+        //   return null
+        // }
+        // const isPasswordValid = await compare(credentials.password, user.password)
+        // if (!isPasswordValid) {
+        //   return null
+        // }
+
+        // return {
+        //   id: String(user.id),
+        //   email: user.email,
+        //   name: user.name
+        // };
       },
     }),
     GoogleProvider({
