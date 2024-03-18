@@ -7,12 +7,14 @@ export async function POST(request: Request) {
 
   const mail = new mailImpl();
   mail.initFromDataObject(body);
-  mail.setFrom("Buildfast <onboarding@resend.dev>");
+  mail.setFrom("Harsh Arya <harsharya7021@gmail.com>");
   mail.setSubject("Hello world");
   mail.setText("Mail by buildfst");
 
   const { name, email } = body;
+
   try {
+    mail.setEmail(email);
     const resend = new resendInstance;
     const { data, error } = await resend.sendMail(mail)
     if (error) {

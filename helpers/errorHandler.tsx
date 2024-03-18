@@ -31,6 +31,12 @@ export default class errorHandler implements errorInterfance {
         this.success = false;
     }
 
+    missingItem(msg: string) {
+        this.status = 400;
+        this.message = msg;
+        this.success = false;
+    }
+
     noAuthenticationTokenError(msg: string) {
         this.status = 201;
         this.message = msg;

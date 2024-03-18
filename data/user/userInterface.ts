@@ -4,4 +4,8 @@ export default interface userInterface {
     emailVerified: boolean,
     password?: string
     image?: string
+
+    initFromDataObject(data: any): void;
+    getEmail(): void;
+    getId(): void;
 }

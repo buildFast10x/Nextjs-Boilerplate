@@ -58,6 +58,10 @@ export default class mailImpl implements mailInterface {
         return this.name;
     }
 
+    setEmail(email: string) {
+        this.email = email;
+    }
+
     getEmail() {
         return this.email;
     }
