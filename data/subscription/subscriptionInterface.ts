@@ -7,4 +7,7 @@ export default interface subscriptionInterface {
     stripeSubscriptionId?: string
     stripePriceId?: string
     stripeCurrentPeriodEnd? : string
+    isValid?: boolean;
+
+    getStripePriceId(): string;
 }

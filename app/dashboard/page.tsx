@@ -8,8 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { authOptions } from "@/next-auth/config";
-import { storeSubscriptionPlans } from "@/stripe/config";
-import { getUserSubscriptionPlan } from "@/stripe/subscription";
+import { subscriptionPlansData } from "@/utils/subscriptionPlans";
 import { CheckCircle2Icon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -17,10 +16,12 @@ import { redirect } from "next/navigation";
 import Mail from "./component/mail";
 import { ManageUserSubscriptionButton } from "./component/manage-subscription";
 import UserMenu from "./component/user-menu";
+import checkSubscription from "@/lib/subscription";
+import subscriptionInterface from "@/data/subscription/subscriptionInterface";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
-  const subscriptionPlan = await getUserSubscriptionPlan();
+  const subscription: subscriptionInterface = await checkSubscription();
   if (!session) {
     redirect("/");
   }
@@ -32,14 +33,14 @@ export default async function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
-        {storeSubscriptionPlans.map((plan) => (
+        {subscriptionPlansData.map((plan) => (
           <Card
             key={plan.id}
             className={
-              plan.name === subscriptionPlan.name ? "border-primary" : ""
+              plan.stripePriceId === subscription.stripePriceId ? "border-primary" : ""
             }
           >
-            {plan.name === subscriptionPlan.name ? (
+            {plan.stripePriceId === subscription.stripePriceId ? (
               <div className="w-full relative">
                 <div className="text-center px-3 py-1 bg-secondary-foreground text-secondary text-xs  w-fit rounded-l-lg rounded-t-none absolute right-0 font-semibold">
                   Current Plan
@@ -71,9 +72,9 @@ export default async function Dashboard() {
                   userId={session.user.id}
                   email={session.user.email || ""}
                   stripePriceId={plan.stripePriceId}
-                  stripeCustomerId={subscriptionPlan?.stripeCustomerId}
-                  isSubscribed={!!subscriptionPlan.isSubscribed}
-                  isCurrentPlan={subscriptionPlan?.name === plan.name}
+                  stripeCustomerId={subscription?.stripeCustomerId}
+                  isSubscribed={subscription.isValid || false}
+                  isCurrentPlan={subscription?.stripeCustomerId === plan.stripePriceId}
                 />
               ) : (
                 <div>

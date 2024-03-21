@@ -8,4 +8,5 @@ export default interface userInterface {
     initFromDataObject(data: any): void;
     getEmail(): void;
     getId(): void;
+    toJson(): any;
 }

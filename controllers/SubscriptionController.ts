@@ -65,4 +65,32 @@ export default class SubscriptionController {
         }
     }
 
+    async getSubscription(userId: string) { 
+        try {
+
+            const whereJson = {
+                "userId": userId
+            }
+
+            const selectJson = {
+                "stripeSubscriptionId": true,
+                "stripeCurrentPeriodEnd": true,
+                "stripeCustomerId": true,
+                "stripePriceId": true,
+            }
+
+            const subscription = await prisma.subscription.findUnique({
+                where: whereJson,
+                select: selectJson
+            })
+
+            return subscription;
+
+        } catch (e) {
+            const error = new errorHandler();
+            error.internalServerError(e);
+            return error.generateError();
+        }
+    }
+
 }

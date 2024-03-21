@@ -1,4 +1,4 @@
-export type SubscriptionPlan = {
+export type subscriptionPlanInterface = {
     id: string;
     name: string;
     description: string;
@@ -7,7 +7,9 @@ export type SubscriptionPlan = {
     features: Array<string>;
 }
 
-export const storeSubscriptionPlans: SubscriptionPlan[] = [
+
+
+export const subscriptionPlansData: subscriptionPlanInterface[] = [
     {
         id: "pro",
         name: "Pro",
@@ -33,3 +35,8 @@ export const storeSubscriptionPlans: SubscriptionPlan[] = [
         features: ["Feature 1", "Feature 2", "Feature 3"],
     },
 ];
+
+async function getPlanByStripePriceId(stripePriceId: string) {
+    return await subscriptionPlansData.find(
+        (plan) => plan.stripePriceId === stripePriceId)
+}
