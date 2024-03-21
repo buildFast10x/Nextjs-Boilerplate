@@ -1,4 +1,5 @@
 import mailImpl from "@/data/mail/mailImpl";
+import errorHandler from "@/helpers/errorHandler";
 import resendInstance from "@/lib/resend";
 import { NextResponse } from "next/server";
 
@@ -18,10 +19,14 @@ export async function POST(request: Request) {
     const resend = new resendInstance;
     const { data, error } = await resend.sendMail(mail)
     if (error) {
-      return NextResponse.json(error, { status: 400 });
+      const errorHandlerInstance = new errorHandler();
+      errorHandlerInstance.internalServerError(error);
+      return errorHandlerInstance.generateError();
     }
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error });
+  } catch (e: any) {
+    const error = new errorHandler();
+    error.internalServerError(e);
+    return error.generateError();
   }
 }

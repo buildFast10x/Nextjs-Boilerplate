@@ -5,6 +5,12 @@ const AllAPIRouteMapping = {
             method: "POST"
         }
     },
+    mails: {
+        send: {
+            apiPath: "/api/resend",
+            method: "POST"
+        }
+    }
 }
 
 export default AllAPIRouteMapping;  

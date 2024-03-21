@@ -1,5 +1,7 @@
 "use client";
 
+import axiosInstance from "@/lib/axios";
+import AllAPIRouteMapping from "@/utils/AllAPIRouteMapping";
 import { Loader } from "lucide-react";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -7,21 +9,24 @@ import { toast } from "sonner";
 type Props = {};
 
 export default function Mail({}: Props) {
+  
   const [mailStatus, setMailStatus] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+
   const sendEmail = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setMailStatus(true);
     try {
-      const data = await fetch("/api/email", {
-        method: "POST",
-        body: JSON.stringify({
-          email: emailRef.current?.value,
-          name: nameRef.current?.value,
-        }),
-      }).then((res) => res.json());
-      const { error } = data;
+      const axios = new axiosInstance();
+      axios.setPayload(JSON.stringify({
+        email: emailRef.current?.value,
+        name: nameRef.current?.value,
+      }));
+
+      const response = await axios.makeCall(AllAPIRouteMapping.mails.send.apiPath, AllAPIRouteMapping.mails.send.method);    
+      console.log("response: ", response);  
+      const { error } = response;
       if (error) {
         toast.error("Something went wrong!!");
         return;
