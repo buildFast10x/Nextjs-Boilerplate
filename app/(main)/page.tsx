@@ -1,5 +1,5 @@
 import LoginForm from "@/components/internal/Forms/LoginForm";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/next-auth/utils";
 import Link from "next/link";

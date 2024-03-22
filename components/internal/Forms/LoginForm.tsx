@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input"
 import userInterface from '@/data/user/userInterface'
 import axiosInstance from '@/lib/axios'
 import AllAPIRouteMapping from '@/utils/AllAPIRouteMapping'
+import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 
@@ -30,7 +31,12 @@ const loginFormSchema = z.object({
 export default function LoginForm() {
 
     const searchParams = useSearchParams();
+    const router = useRouter();
     const callbackUrl = searchParams.get("callbackUrl");
+
+    function handleSignupRedirect() {
+        router.push('/signup');
+    }
 
     const form = useForm<z.infer<typeof loginFormSchema>>({
         resolver: zodResolver(loginFormSchema),
@@ -105,6 +111,9 @@ export default function LoginForm() {
 
                 <Button type="submit">Submit</Button>
             </form>
+            <div className="mt-5">
+                Didn&apos;t have a account? <Button type="submit" onClick={handleSignupRedirect}>Signup</Button>
+            </div>
         </Form>
 
     )
