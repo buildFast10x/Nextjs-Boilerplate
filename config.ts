@@ -51,7 +51,12 @@ const prod: any = {
         clientSecret: process.env.PROD_GOOGLE_CLIENT_SECRET || ''
     },
     stripe: {
-
+        secret: process.env.PROD_STRIPE_SECRET_KEY || '',
+        webhook: process.env.PROD_STRIPE_WEBHOOK_SECRET || '',
+        publishable: process.env.PROD_NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
+    },
+    resend: {
+        apiKey: process.env.PROD_RESEND_API_KEY || ''
     }
 };
 
