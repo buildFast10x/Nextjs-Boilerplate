@@ -1,13 +1,14 @@
 import userInterface from "@/data/user/userInterface";
 import Stripe from "stripe";
 import { absoluteUrl } from "./utils";
+import configEnv from "@/config"
 
 export default class stripeInstance {
     stripe: any 
     stripePriceId: string = ''
 
     constructor() {
-        this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
+        this.stripe = new Stripe(configEnv.stripe.secret || "", {
             apiVersion: "2023-10-16",
             typescript: true,
         });
@@ -53,7 +54,7 @@ export default class stripeInstance {
         const event = await this.stripe.webhooks.constructEvent(
             body,
             signature,
-            process.env.STRIPE_WEBHOOK_SECRET!
+            configEnv.stripe.webhook!
         )
         return event;
     }

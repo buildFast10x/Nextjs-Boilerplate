@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/lib/prisma";
 import { compare } from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import configEnv from "@/config"
 
 import userImpl from "@/data/user/userImpl";
 import userController from "@/controllers/UserController";
@@ -78,8 +79,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+      clientId: configEnv.google.clientId!,
+      clientSecret: configEnv.google.clientSecret!
     })
   ],
   // get id in session

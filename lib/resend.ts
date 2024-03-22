@@ -1,12 +1,13 @@
 import { Resend } from "resend";
 import { EmailTemplate } from "@/utils/emailTemplates";
 import mailInterface from "@/data/mail/mailInterface";
+import configEnv from "@/config"
 
 export default class resendInstance {
     resend: any;
 
     constructor() {
-        this.resend = new Resend(process.env.RESEND_API_KEY);
+        this.resend = new Resend(configEnv.resend.apiKey);
     }
 
     async sendMail(mailObj: mailInterface) {

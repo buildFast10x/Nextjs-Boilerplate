@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import type Stripe from "stripe";
 import prisma from "@/lib/prisma";
 
+import configEnv from "@/config"
 export async function POST(request: Request) {
   const body = await request.text();
   const signature = headers().get("Stripe-Signature") ?? "";
@@ -14,7 +15,7 @@ export async function POST(request: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET || ""
+      configEnv.stripe.webhook || ""
     );
   } catch (err) {
     return new Response(
