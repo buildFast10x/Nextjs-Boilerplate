@@ -1,0 +1,3 @@
+interface formStatusInterface {
+    message?: string
+}
