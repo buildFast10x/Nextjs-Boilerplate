@@ -14,6 +14,10 @@ export default class stripeInstance {
         });
     }
 
+    getStripe() {
+        return this.stripe;
+    }
+
     setStripePriceId(stripePriceId: string) {
         this.stripePriceId = stripePriceId;
     }

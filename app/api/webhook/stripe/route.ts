@@ -1,7 +1,7 @@
 
-import { stripe } from "@/stripe";
+import stripeInstance from "@/lib/stripe";
 import { headers } from "next/headers";
-import type Stripe from "stripe";
+import  Stripe from "stripe";
 import prisma from "@/lib/prisma";
 
 import configEnv from "@/config"
@@ -11,8 +11,10 @@ export async function POST(request: Request) {
 
   let event: Stripe.Event;
 
+  const stripeInstaceHandler = new stripeInstance();
+
   try {
-    event = stripe.webhooks.constructEvent(
+    event = stripeInstaceHandler.getStripe().webhooks.constructEvent(
       body,
       signature,
       configEnv.stripe.webhook || ""
@@ -34,7 +36,7 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "checkout.session.completed") {
-    const subscription = await stripe.subscriptions.retrieve(
+    const subscription = await stripeInstaceHandler.getStripe().subscriptions.retrieve(
       session.subscription as string
     );
     const updatedData = {
@@ -63,7 +65,7 @@ export async function POST(request: Request) {
 
   if (event.type === "invoice.payment_succeeded") {
     // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
+    const subscription = await stripeInstaceHandler.getStripe().subscriptions.retrieve(
       session.subscription as string
     );
 
