@@ -8,6 +8,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function absoluteUrl(path: string) {
-  return `${configEnv.nextEnv || "http://localhost:3000"
+  return `${configEnv.app.url || "http://localhost:3000"
     }${path}`;
 }
