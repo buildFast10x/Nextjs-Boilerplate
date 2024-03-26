@@ -6,14 +6,14 @@ Welcome to the Next.js Open Source Boilerplate by [Buildfast](https://buildfast.
 
 ## Features
 
- ✅ Email Login and Signup Using Next-Auth
- ✅ Stripe Subscription Payments
- ✅ Resend 
- ⏩ User Roles
- ⏩ Social Logins
- ⏩ 2FA
- ⏩ Admin Dashboard with multiple features
- ⏩ blogs
+ ✅ Email Login and Signup Using Next-Auth <br>
+ ✅ Stripe Subscription Payments <br>
+ ✅ Resend <br>
+ ⏩ User Roles <br>
+ ⏩ Social Logins <br>
+ ⏩ 2FA <br>
+ ⏩ Admin Dashboard with multiple features <br>
+ ⏩ blogs <br>
 
 
 ## Tech Stack
