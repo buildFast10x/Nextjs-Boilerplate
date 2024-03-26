@@ -5,7 +5,7 @@ const env = process.env.NEXT_PUBLIC_ENV || '';
 const dev: any = {
     nextEnv: process.env.NEXT_PUBLIC_ENV || '',
     nextAuth: {
-        secret: process.env.DEV_NEXTAUTH_SECRET || '',
+        secret: process.env.NEXTAUTH_SECRET || '',
         url: process.env.DEV_NEXTAUTH_URL || ''
     },
     app: {
@@ -35,7 +35,7 @@ const dev: any = {
 
 const prod: any = {
     nextEnv: process.env.NEXT_PUBLIC_ENV || '',
-    nextAuthSecret: process.env.DEV_NEXTAUTH_SECRET || '',
+    nextAuthSecret: process.env.NEXTAUTH_SECRET || '',
     app: {
         url: process.env.NEXT_PUBLIC_PROD_API_URL || ''
     },
