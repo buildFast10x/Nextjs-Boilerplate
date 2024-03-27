@@ -21,6 +21,15 @@ import AllAPIRouteMapping from '@/utils/AllAPIRouteMapping'
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import Link from "next/link"
 
 
 const loginFormSchema = z.object({
@@ -76,45 +85,76 @@ export default function LoginForm() {
     }
 
     return (
-        <Form {...form} >
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 w-full max-w-md p-8">
-
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Email</FormLabel>
-                            <FormControl>
-                                <Input placeholder="uday@buildfast.co.in" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                This is your Email.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                                <Input placeholder="****" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <Button type="submit">Submit</Button>
-            </form>
-            <div className="mt-5">
-                Didn&apos;t have a account? <Button type="submit" onClick={handleSignupRedirect}>Signup</Button>
-            </div>
-        </Form>
+        <>
+            <Card className="mx-auto max-w-sm">
+                <CardHeader>
+                    <CardTitle className="text-2xl">Login</CardTitle>
+                    <CardDescription>
+                        Enter your email below to login to your account
+                    </CardDescription>
+                </CardHeader>
+                <Form {...form} >
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <CardContent>
+                            <div className="grid gap-4">
+                                
+                                    <div className="grid gap-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Email</FormLabel>
+                                                <FormControl>
+                                                    <Input id="email"
+                                                        type="email"
+                                                        placeholder="m@example.com"
+                                                        required {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <FormField
+                                            control={form.control}
+                                            name="password"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <div className="flex items-center">
+                                                        <FormLabel>Password</FormLabel>
+                                                        <Link href="#" className="ml-auto inline-block text-sm underline">
+                                                            Forgot your password?
+                                                        </Link>
+                                                    </div>
+                                                    <FormControl>
+                                                        <Input id="password" type="password" required placeholder="****" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                    <Button type="submit" className="w-full">
+                                        Login
+                                    </Button>
+                                
+                                <Button variant="outline" className="w-full">
+                                    Login with Google
+                                </Button>
+                            </div>
+                            <div className="mt-4 text-center text-sm">
+                                Don&apos;t have an account?{" "}
+                                <Link href="/signup" className="underline">
+                                    Sign up
+                                </Link>
+                            </div>
+                        </CardContent>
+                    </form>
+                </Form>
+            </Card>
+        </>
 
     )
 }
