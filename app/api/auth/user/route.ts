@@ -1,8 +1,11 @@
 import userController from "@/controllers/UserController";
+import mailImpl from "@/data/mail/mailImpl";
 import userImpl from "@/data/user/userImpl";
 import userInterface from "@/data/user/userInterface";
+import verificationTokenImpl from "@/data/verificationToken/verificationTokenImpl";
 import errorHandler from "@/helpers/errorHandler";
-import bcrypt from "bcrypt";
+import resendInstance from "@/lib/resend";
+import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -23,6 +26,15 @@ export async function POST(req: NextRequest) {
         if (!isEmailExists) {
             // TODO: add functionality for lastname
             await userControllerHandler.create(userForm.getName(), userForm.getPassword() || '', userForm.getEmail())
+            
+            const verificationTokenForm = new verificationTokenImpl();
+            await verificationTokenForm.generateVerificationToken(userForm.getEmail());
+            
+            const mail = new mailImpl();
+            mail.populateTestCredentials()
+            
+            const resend = new resendInstance();
+            resend.sendVerificationEmail(userForm.getEmail(), verificationTokenForm.getToken(), mail);
         } else {
             const error = new errorHandler();
             error.conflict("Email Already Exists");

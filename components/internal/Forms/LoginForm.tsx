@@ -1,5 +1,5 @@
 "use client"
-import React, { startTransition } from 'react'
+import React, { startTransition, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -25,27 +25,34 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import { FormError } from '../FormError'
+import { FormSuccess } from '../FormSuccess'
+import { AuthError } from 'next-auth'
+import { login } from '@/actions/login'
+import { loginFormSchema } from '@/schemas'
 
-
-const loginFormSchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-})
+// const loginFormSchema = z.object({
+//     email: z.string().email(),
+//     password: z.string(),
+// })
 
 export default function LoginForm() {
 
     const searchParams = useSearchParams();
     const router = useRouter();
     const callbackUrl = searchParams.get("callbackUrl");
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with Different providor!": "";
 
-    function handleSignupRedirect() {
-        router.push('/signup');
-    }
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
 
     const form = useForm<z.infer<typeof loginFormSchema>>({
         resolver: zodResolver(loginFormSchema),
@@ -60,8 +67,36 @@ export default function LoginForm() {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log("value", values)
-
-        signIn("credentials", values);
+        setError("");
+        setSuccess("");
+        startTransition(() => {
+            login(values)
+                .then((data) => {
+                    setError(data?.error);
+                    setSuccess(data?.success);
+                    // TODO: Add when we add 2FA
+                    
+                });
+        });
+        // startTransition(() => {
+        //     try {
+        //         signIn("credentials", values);
+                
+        //     } catch(e: any) {
+        //         if(e instanceof AuthError) {
+        //             switch (e.type) {
+        //                 case "CredentialsSignin":
+        //                     setError("Invalid credentials!");
+        //                     setSuccess("");
+        //                     break
+        //                 default:
+        //                     setError("Something went wrong!");
+        //                     setSuccess("");
+        //             }
+        //         }
+        //     }
+        // });
+        
 
         // // startTransition(() => {
         // login(values, callbackUrl)
@@ -82,6 +117,12 @@ export default function LoginForm() {
         //         console.log("success")
         //     }).catch(() => console.log("Something is wrong"));
         // // });
+    }
+
+    function handleSocialLogin(provider: "google" | "github") {
+        signIn(provider, {
+            callbackUrl: DEFAULT_LOGIN_REDIRECT
+        })
     }
 
     return (
@@ -140,7 +181,7 @@ export default function LoginForm() {
                                         Login
                                     </Button>
                                 
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full" onClick={() => handleSocialLogin("google")}>
                                     Login with Google
                                 </Button>
                             </div>
@@ -150,9 +191,16 @@ export default function LoginForm() {
                                     Sign up
                                 </Link>
                             </div>
+                            
                         </CardContent>
                     </form>
                 </Form>
+                <div className="px-2 py-5">
+                    <FormError message={error || urlError} />
+                    <FormSuccess message={success} />
+                </div>
+                
+                
             </Card>
         </>
 

@@ -38,4 +38,61 @@ export default class userController {
         return result;
     }
 
+    async getUserById(id: string) {
+        try {
+            const whereJson = {
+                "id": id
+            }
+
+            const finalQuery = {
+                where: whereJson
+            }
+            const result = await prisma.user.findUnique(finalQuery);
+            return result;
+        } catch (e) {
+            return e;
+        }
+    }
+
+    async setEmailVerifiedById(id: string) {
+        try {
+            const dataJson = {
+                "emailVerified": new Date()
+            }
+            const whereJson = {
+                "id": id
+            }
+
+            const finalQuery = {
+                data: dataJson,
+                where: whereJson
+            }
+            const result = await prisma.user.update(finalQuery);
+            return result;
+        } catch (e) {
+            return e;
+        }
+    }
+
+    async updateData(id: string, email: string) {
+        try {
+            const dataJson = {
+                "emailVerified": new Date(),
+                "email": email
+            }
+            const whereJson = {
+                "id": id
+            }
+
+            const finalQuery = {
+                data: dataJson,
+                where: whereJson
+            }
+            const result = await prisma.user.update(finalQuery);
+            return result;
+        } catch (e) {
+            return e;
+        }
+    }
+
 }

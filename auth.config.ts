@@ -1,5 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import configEnv from "@/config"
 import bcrypt from "bcryptjs";
 
@@ -9,6 +10,10 @@ import userController from "@/controllers/UserController";
 
 export default {
     providers: [
+        Google({
+            clientId: configEnv.google.clientId,
+            clientSecret: configEnv.google.clientSecret
+        }),
         Credentials({
             async authorize(credentials: any) {
                 if (!credentials?.email || !credentials?.password) {

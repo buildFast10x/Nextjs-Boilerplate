@@ -1,7 +1,11 @@
 const AllAPIRouteMapping = {
     users: {
         add: {
-            apiPath: "/api/user",
+            apiPath: "/api/auth/user",
+            method: "POST"
+        },
+        verify: {
+            apiPath: "/api/auth/verification",
             method: "POST"
         }
     },

@@ -6,7 +6,8 @@ export default class mailImpl implements mailInterface {
     email: string = '';
     from: string = '';
     subject: string = '';
-    text: string = '';
+    text?: string = '';
+    html?: string;
 
     initFromDataObject(data: any) {
         if (!stringUtils.isUndefinedEmptyorNull(data.name)) {
@@ -51,7 +52,15 @@ export default class mailImpl implements mailInterface {
     }
 
     getText() {
-        return this.text
+        return this.text || ''
+    }
+
+    setHTML(html: string) {
+        this.html = html;
+    }
+
+    getHTML() {
+        return this.html || ''
     }
 
     getName() {
@@ -64,5 +73,9 @@ export default class mailImpl implements mailInterface {
 
     getEmail() {
         return this.email;
+    }
+
+    populateTestCredentials() {
+        this.from = "onboarding@resend.dev";
     }
 }
