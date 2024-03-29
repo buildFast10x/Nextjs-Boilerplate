@@ -5,7 +5,17 @@ const loginFormSchema = z.object({
     password: z.string(),
 })
 
+const resetFormSchema = z.object({
+    email: z.string().email()
+})
+
+const newPasswordSchema = z.object({
+    password: z.string()
+})
+
 
 export {
-    loginFormSchema
+    loginFormSchema,
+    resetFormSchema,
+    newPasswordSchema
 }

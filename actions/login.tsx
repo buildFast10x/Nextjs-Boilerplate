@@ -22,7 +22,7 @@ export const login = async (values: z.infer<typeof loginFormSchema>) => {
     const { email, password } = validatedFields.data;
 
     const userControllerHandler = new userController();
-    const existingUser = await userControllerHandler.getUserByEmail(email);
+    const existingUser: any = await userControllerHandler.getUserByEmail(email);
 
     if(!existingUser || !existingUser.email || !existingUser.password) {
         return { error: "Email Does not exist"}

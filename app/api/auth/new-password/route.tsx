@@ -1,36 +1,37 @@
+import passwordResetTokenController from "@/controllers/PasswordResetTokenController";
 import userController from "@/controllers/UserController";
-import verficationTokenController from "@/controllers/VerficationTokenController";
+import passwordResetTokenImpl from "@/data/passwordResetToken/passwordResetTokenImpl";
 import userImpl from "@/data/user/userImpl";
-import verificationTokenImpl from "@/data/verificationToken/verificationTokenImpl";
 import errorHandler from "@/helpers/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
     try {
-        const { token } = await req.json();
+        const { password, token } = await req.json();
 
-        const verficationTokenControllerHandler = new verficationTokenController();
-        const existingToken = await verficationTokenControllerHandler.getVerificationTokenByToken(token);
+        const passwordResetTokenControllerHandler = new passwordResetTokenController();
+        const existingToken = await passwordResetTokenControllerHandler.getPasswordResetTokenByToken(token);
 
-        if(!existingToken) {
+        if (!existingToken) {
             const error = new errorHandler();
             error.internalServerError("Token does not exist");
             return error.generateError();
         }
 
-        const verificationTokenForm = new verificationTokenImpl();
-        verificationTokenForm.initFromDataObject(existingToken);
+        const passwordResetTokenForm = new passwordResetTokenImpl();
+        passwordResetTokenForm.initFromDataObject(existingToken);
 
-        if(verificationTokenForm.isTokenExpired()) {
+        if (passwordResetTokenForm.isTokenExpired()) {
             const error = new errorHandler();
             error.internalServerError("Token has expired");
             return error.generateError();
         }
 
         const userControllerHandler = new userController();
-        const existingUser = await userControllerHandler.getUserByEmail(verificationTokenForm.getEmail())
-        
-        if(!existingUser) {
+        const existingUser = await userControllerHandler.getUserByEmail(passwordResetTokenForm.getEmail())
+
+        if (!existingUser) {
             const error = new errorHandler();
             error.missingItem("User Not found");
             return error.generateError();
@@ -38,12 +39,14 @@ export async function POST(req: NextRequest) {
 
         const userForm = new userImpl();
         userForm.initFromDataObject(existingUser);
-        await userControllerHandler.updateData(userForm.getId(), userForm.getEmail());
 
-        await verficationTokenControllerHandler.deleteVerificationTokenById(verificationTokenForm.getId());
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await userControllerHandler.updatePassword(userForm.getId(), hashedPassword);
+        await passwordResetTokenControllerHandler.deletePasswordResetTokenById(passwordResetTokenForm.getId());
+
         const returnJson: any = {
             status: 200,
-            message: "User Verified",
+            message: "Password Updated",
             success: true
         }
         return NextResponse.json(returnJson);

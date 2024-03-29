@@ -1,11 +1,12 @@
 import stringUtils from "@/utils/stringUtils";
-import verificationTokenInterface from "./verificationTokenInterface";
 import { v4 as uuidv4 } from "uuid";
 
 import prisma from "@/lib/prisma";
 import verficationTokenController from "@/controllers/VerficationTokenController";
+import passwordResetTokenInterface from "./passwordResetTokenInterface";
+import passwordResetTokenController from "@/controllers/PasswordResetTokenController";
 
-export default class verificationTokenImpl implements verificationTokenInterface {
+export default class passwordResetTokenImpl implements passwordResetTokenInterface {
     id: string = '';
     email: string = '';
     token: string = '';
@@ -35,15 +36,15 @@ export default class verificationTokenImpl implements verificationTokenInterface
         const token = uuidv4();
         const expires = new Date(new Date().getTime() + 3600 * 1000);
         
-        const vertificationTokenControllerHandler = new verficationTokenController();
-        const existingToken: any = await vertificationTokenControllerHandler.getVerificationTokenByEmail(email);
+        const passwordResetTokenControllerHandler = new passwordResetTokenController();
+        const existingToken: any = await passwordResetTokenControllerHandler.getPasswordResetTokenByEmail(email);
 
         if (existingToken) {
             this.initFromDataObject(existingToken);
-            await vertificationTokenControllerHandler.deleteVerificationTokenById(this.id);
+            await passwordResetTokenControllerHandler.deletePasswordResetTokenById(this.id);
         }
 
-        const verficationToken = await vertificationTokenControllerHandler.create(email, token, expires);
+        const verficationToken = await passwordResetTokenControllerHandler.create(email, token, expires);
         this.initFromDataObject(verficationToken);
     }
 

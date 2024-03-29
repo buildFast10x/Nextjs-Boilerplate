@@ -1,3 +1,4 @@
+import errorHandler from "@/helpers/errorHandler";
 import prisma from "@/lib/prisma";
 import jsonUtilsImpl from "@/utils/jsonUtils";
 // import jsonUtilsImpl from "@/utils/jsonUtils";
@@ -27,15 +28,22 @@ export default class userController {
     }
 
     async getUserByEmail(email: string) {
-        const whereJson = {
-            "email": email
-        }
+        try{
+            const whereJson = {
+                "email": email
+            }
 
-        const finalQuery = {
-            where: whereJson
+            const finalQuery = {
+                where: whereJson
+            }
+            const result = await prisma.user.findUnique(finalQuery);
+            return result;
+        } catch (e: any) {
+            const error = new errorHandler();
+            error.internalServerError("Email does not found");
+            return error.generateError();
         }
-        const result = await prisma.user.findUnique(finalQuery);
-        return result;
+        
     }
 
     async getUserById(id: string) {
@@ -79,6 +87,26 @@ export default class userController {
             const dataJson = {
                 "emailVerified": new Date(),
                 "email": email
+            }
+            const whereJson = {
+                "id": id
+            }
+
+            const finalQuery = {
+                data: dataJson,
+                where: whereJson
+            }
+            const result = await prisma.user.update(finalQuery);
+            return result;
+        } catch (e) {
+            return e;
+        }
+    }
+
+    async updatePassword(id: string, password: string) {
+        try {
+            const dataJson = {
+                "password": password
             }
             const whereJson = {
                 "id": id
