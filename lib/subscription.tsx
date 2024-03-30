@@ -11,7 +11,7 @@ export const checkSubscription = async () => {
     }
 
     const subscriptionControllerHandler = new SubscriptionController();
-    const userSubscriptionDB = await subscriptionControllerHandler.getSubscription(session.user.id);
+    const userSubscriptionDB = await subscriptionControllerHandler.getSubscription(session?.user?.id || '');
 
     const userSubscription = new subscriptionImpl();
     userSubscription.initFromDataObject(userSubscriptionDB, session);
