@@ -88,7 +88,8 @@ export default class mailImpl implements mailInterface {
         if (configEnv.nextEnv === 'dev') {
             this.populateTestCredentials();
         } else {
-            this.populateProdCredentials();
+            // TODO: Chagne to prod 
+            this.populateTestCredentials();
         }
     }
 }
