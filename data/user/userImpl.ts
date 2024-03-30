@@ -1,5 +1,6 @@
 import stringUtils from "@/utils/stringUtils";
 import userInterface from "./userInterface";
+import UserRoleEnum from "@/enums/UserRoleEnum";
 
 export default class userImpl implements userInterface {
     id: string = '';
@@ -7,6 +8,7 @@ export default class userImpl implements userInterface {
     email: string = '';
     emailVerified: boolean = false;
     password?: string;
+    role?: UserRoleEnum
     image?: string;
 
     getId() {
@@ -33,6 +35,10 @@ export default class userImpl implements userInterface {
         return this.image;
     }
 
+    getRole() {
+        return this.role;
+    }
+
     initFromDataObject(data: any) {
         
         if (!stringUtils.isUndefinedEmptyorNull(data.id)) {
@@ -53,6 +59,16 @@ export default class userImpl implements userInterface {
 
         if (!stringUtils.isUndefinedEmptyorNull(data.password)) {
             this.password = data.password
+        }
+
+        if (!stringUtils.isUndefinedEmptyorNull(data.role)) {
+            if(data.role === UserRoleEnum.ADMIN) {
+                this.role = UserRoleEnum.ADMIN
+            }
+            
+            else if(data.role === UserRoleEnum.USER) {
+                this.role = UserRoleEnum.USER
+            }
         }
         
         if (!stringUtils.isUndefinedEmptyorNull(data.image)) {

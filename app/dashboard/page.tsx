@@ -7,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { authOptions } from "@/next-auth/config";
+// import { authOptions } from "@/next-auth/config";
 import { subscriptionPlansData } from "@/utils/subscriptionPlans";
 import { CheckCircle2Icon } from "lucide-react";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Mail from "./component/mail";
@@ -18,9 +18,10 @@ import { ManageUserSubscriptionButton } from "./component/manage-subscription";
 import UserMenu from "./component/user-menu";
 import checkSubscription from "@/lib/subscription";
 import subscriptionInterface from "@/data/subscription/subscriptionInterface";
+import { getCurrentUser } from "@/next-auth/utils";
 
 export default async function Dashboard() {
-  const session = await getServerSession(authOptions);
+  const session: any = await getCurrentUser();
   const subscription: subscriptionInterface = await checkSubscription();
   if (!session) {
     redirect("/");

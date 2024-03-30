@@ -55,6 +55,12 @@ export default class errorHandler implements errorInterfance {
         this.success = false;
     }
 
+    notFoundWithMessage(msg: string) {
+        this.status = 404;
+        this.message = msg;
+        this.success = false;
+    }
+
     conflict(msg: string) {
         this.status = 409;
         this.message = msg;

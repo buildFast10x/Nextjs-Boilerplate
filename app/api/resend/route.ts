@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
   try {
     mail.setEmail(email);
-    const resend = new resendInstance;
+    const resend = new resendInstance();
     const { data, error } = await resend.sendMail(mail)
     if (error) {
       const errorHandlerInstance = new errorHandler();
