@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/next-auth/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export default async function Home() {
   const session = await getCurrentUser();
@@ -16,7 +17,9 @@ export default async function Home() {
   return (
     <div className="flex items-center justify-center h-screen">
       {/* <Link href={'/api/auth/signin'} className={cn(buttonVariants({ size: "lg" }))}>Login</Link> */}
+      <Suspense>
       <LoginForm />
+      </Suspense>
     </div>
   );
 }
