@@ -8,9 +8,9 @@ export async function POST(request: Request) {
 
   const mail = new mailImpl();
   mail.initFromDataObject(body);
-  mail.setFrom("Harsh Arya <harsharya7021@gmail.com>");
-  mail.setSubject("Hello world");
-  mail.setText("Mail by buildfst");
+  mail.setFrom("noreply <norely@buildfast.co.in>");
+  mail.setSubject("Test Mail");
+  mail.setText("This is a test mail. Thanks for using Nextjs Boilerplate build by Buildfast.");
 
   const { name, email } = body;
 

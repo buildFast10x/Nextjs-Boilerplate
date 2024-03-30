@@ -62,7 +62,7 @@ export default function NewPasswordForm() {
     async function onSubmit(values: z.infer<typeof newPasswordSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log("value", values)
+        // console.log("value", values)
         setError("");
         setSuccess("");
 

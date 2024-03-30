@@ -25,7 +25,7 @@ export default function Mail({}: Props) {
       }));
 
       const response = await axios.makeCall(AllAPIRouteMapping.mails.send.apiPath, AllAPIRouteMapping.mails.send.method);    
-      console.log("response: ", response);  
+      // console.log("response: ", response);  
       const { error } = response;
       if (error) {
         toast.error("Something went wrong!!");

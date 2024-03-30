@@ -15,7 +15,6 @@ export default class resendInstance {
             from: mailObj.getFrom(),
             to: mailObj.getEmail(),
             subject: mailObj.getSubject(),
-            react: EmailTemplate({ firstName: mailObj.getName() }),
             text: mailObj.getText(),
         });
         return mail;

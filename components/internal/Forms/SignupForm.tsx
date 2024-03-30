@@ -64,7 +64,7 @@ export default function SignupForm() {
   async function onSubmit(values: z.infer<typeof userFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log("value", values)
+    // console.log("value", values)
 
     const axios = new axiosInstance();
     axios.setPayload(values);

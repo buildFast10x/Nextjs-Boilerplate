@@ -66,7 +66,7 @@ export default function LoginForm() {
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log("value", values)
+        // console.log("value", values)
         setError("");
         setSuccess("");
         startTransition(() => {
