@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         }
 
         const subscriptionControllerHandler = new SubscriptionController();
-        const userSubscriptionDB = await subscriptionControllerHandler.findUnique(user.user.id);
+        const userSubscriptionDB = await subscriptionControllerHandler.findUnique(user?.user?.id || '');
 
         const userSubscription = new subscriptionImpl();
         userSubscription.initFromDataObject(userSubscriptionDB, user);
