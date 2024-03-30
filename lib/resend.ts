@@ -32,7 +32,7 @@ export default class resendInstance {
     }
 
     async sendVerificationEmail(email: string, token: string, mailObj: mailInterface) {
-        const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+        const confirmLink = `${configEnv.app.url}/auth/new-verification?token=${token}`;
         mailObj.setEmail(email);
         mailObj.setSubject("Confirm your email");
         mailObj.setHTML(`<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`);
@@ -41,7 +41,7 @@ export default class resendInstance {
     }
 
     async sendPasswordResetMail(email: string, token: string, mailObj: mailInterface) {
-        const confirmLink = `http://localhost:3000/auth/new-password?token=${token}`;
+        const confirmLink = `${configEnv.app.url}/auth/new-password?token=${token}`;
         mailObj.setEmail(email);
         mailObj.setSubject("Reset Your Password");
         mailObj.setHTML(`<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`);
