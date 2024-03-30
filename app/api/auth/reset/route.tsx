@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         await passwordResetTokenForm.generateVerificationToken(userForm.getEmail());
 
         const mail = new mailImpl();
-        mail.populateTestCredentials()
+        mail.populateCredentials()
 
         const resend = new resendInstance();
         resend.sendPasswordResetMail(userForm.getEmail(), passwordResetTokenForm.getToken(), mail);

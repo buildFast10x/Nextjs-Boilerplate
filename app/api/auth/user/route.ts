@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
             await verificationTokenForm.generateVerificationToken(userForm.getEmail());
             
             const mail = new mailImpl();
-            mail.populateTestCredentials()
+            mail.populateCredentials()
             
             const resend = new resendInstance();
             resend.sendVerificationEmail(userForm.getEmail(), verificationTokenForm.getToken(), mail);

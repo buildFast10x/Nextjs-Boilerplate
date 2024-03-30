@@ -33,7 +33,7 @@ export const login = async (values: z.infer<typeof loginFormSchema>) => {
         await verificationTokenForm.generateVerificationToken(existingUser.email);
 
         const mail = new mailImpl();
-        mail.populateTestCredentials()
+        mail.populateCredentials()
 
         const resend = new resendInstance();
         resend.sendVerificationEmail(email, verificationTokenForm.getToken(), mail);

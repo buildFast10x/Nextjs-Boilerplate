@@ -1,5 +1,6 @@
 import stringUtils from "@/utils/stringUtils";
 import mailInterface from "./mailInterface";
+import configEnv from "@/config";
 
 export default class mailImpl implements mailInterface {
     name: string = '';
@@ -77,5 +78,17 @@ export default class mailImpl implements mailInterface {
 
     populateTestCredentials() {
         this.from = "onboarding@resend.dev";
+    }
+
+    populateProdCredentials() {
+        this.from = "onboarding@buildfast.co.in";
+    }
+
+    populateCredentials() {
+        if (configEnv.nextEnv === 'dev') {
+            this.populateTestCredentials();
+        } else {
+            this.populateProdCredentials();
+        }
     }
 }
