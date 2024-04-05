@@ -89,7 +89,7 @@ export default class mailImpl implements mailInterface {
             this.populateTestCredentials();
         } else {
             // TODO: Chagne to prod 
-            this.populateTestCredentials();
+            this.populateProdCredentials();
         }
     }
 }
