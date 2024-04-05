@@ -35,8 +35,8 @@ export default class resendInstance {
         mailObj.setEmail(email);
         mailObj.setSubject("Confirm your email");
         mailObj.setHTML(`<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`);
-        this.sendHTMLMail(mailObj);
-        
+        const result = await this.sendHTMLMail(mailObj);
+        return result;
     }
 
     async sendPasswordResetMail(email: string, token: string, mailObj: mailInterface) {

@@ -11,6 +11,7 @@ import userController from "@/controllers/UserController";
 import verificationTokenImpl from "@/data/verificationToken/verificationTokenImpl";
 import mailImpl from "@/data/mail/mailImpl";
 import resendInstance from "@/lib/resend";
+import stringUtils from "@/utils/stringUtils";
 
 export const login = async (values: z.infer<typeof loginFormSchema>) => {
     const validatedFields = loginFormSchema.safeParse(values);
@@ -36,9 +37,13 @@ export const login = async (values: z.infer<typeof loginFormSchema>) => {
         mail.populateCredentials()
 
         const resend = new resendInstance();
-        resend.sendVerificationEmail(email, verificationTokenForm.getToken(), mail);
-
-        return { success: "Confirmation Email Send"};
+        const result: any = await resend.sendVerificationEmail(email, verificationTokenForm.getToken(), mail);
+        if(!stringUtils.isUndefinedEmptyorNull(result?.data)) {
+            return { success: "Confirmation Email Send" };
+        } else {
+            return { error: "Error sending mail", "result": result };
+        }
+        
     }
 
     try {
